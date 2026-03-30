@@ -1,2 +1,2 @@
 # omnibox_rules
-一些脚本
+- 适用于 omnibox 2.0 及以上版本。
