@@ -8,4 +8,4 @@
 
 
 ## 鸣谢
-[IPTV](https://github.com/kakaxi-1/IPTV)
+- [IPTV](https://github.com/kakaxi-1/IPTV)
