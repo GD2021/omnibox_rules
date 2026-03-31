@@ -45,8 +45,7 @@ const CLASSES = [
   { type_id: "variety", type_name: "综艺" }
 ];
 
-// 分类 code 列表（搜索时用于 menuCodeList 过滤）
-const MENU_CODES = ["movie", "tv_series", "short_drama", "animation", "variety"];
+
 
 // ==================== 日志 ====================
 const log = (level, msg) => OmniBox.log(level, `[乌云] ${msg}`);
@@ -151,7 +150,6 @@ async function category(params) {
   const pg = parseInt(params.page) || 1;
   try {
     const res = await httpPost("/media/search", {
-      menuCodeList: [tid],
       pageIndex: pg,
       pageSize: 30,
       searchKey: "",
@@ -166,18 +164,16 @@ async function category(params) {
 }
 
 /**
- * 搜索 — 使用 searchKey 字段（v2.2 修复）
+ * 搜索 — 使用 searchKey 字段（v2.2.1 修复：不要传 menuCodeList 多值，会导致 0 结果）
  */
 async function search(params) {
   const wd = (params.keyword || params.wd || "").trim();
   if (!wd) return { list: [] };
   try {
     const res = await httpPost("/media/search", {
-      menuCodeList: MENU_CODES,
-      pageIndex: 1,
-      pageSize: 50,
       searchKey: wd,
-      topCode: ""
+      pageIndex: 1,
+      pageSize: 50
     });
     const data = res.data || {};
     const list = (data.records || []).map(formatVideo).filter(Boolean);
